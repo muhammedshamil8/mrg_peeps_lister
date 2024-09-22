@@ -43,7 +43,7 @@ const StatisticsPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-start p-8 bg-gradient-to-r from-purple-200 to-purple-400 min-h-screen">
-      <h1 className="text-5xl font-bold mb-8 text-white drop-shadow-lg">Statistics Page</h1>
+      <h1 className="text-3xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">Statistics Page</h1>
 
       {loading ? (
         <div className="flex items-center justify-center">

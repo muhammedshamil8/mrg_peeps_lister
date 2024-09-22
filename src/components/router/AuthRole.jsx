@@ -26,8 +26,8 @@ const AuthRoleRequire = ({ role, children }) => {
 
     if (loading) {
         return (
-            <div className='fixed top-0 left-0 w-full h-full bg-white dark:bg-slate-900 flex items-center justify-center z-50'>
-                <p className='text-center dark:text-white flex items-center justify-center'>Loading...</p>
+            <div className='fixed top-0 left-0 w-full h-full bg-slate-900 flex items-center justify-center z-50'>
+                <p className='text-center font-semibold text-white flex items-center justify-center'>Loading...</p>
             </div>
         );
     }

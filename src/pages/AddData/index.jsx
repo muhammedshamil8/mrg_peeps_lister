@@ -108,8 +108,8 @@ const AirtableForm = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start mt-10 h-screen bg-gray-100 p-4">
-      <h1 className="text-4xl font-bold mb-4 text-center">{isEdit ? 'Edit Family Data' : 'Add Family Data'}</h1>
+    <div className="flex flex-col items-center justify-start pt-10 h-screen bg-gradient-to-r from-orange-200 to-orange-400 p-4">
+      <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white">{isEdit ? 'Edit Family Data' : 'Add Family Data'}</h1>
 
       {loading ? (
         <Loader className="animate-spin text-blue-600" />

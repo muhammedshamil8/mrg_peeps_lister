@@ -83,7 +83,7 @@ const HomePage = () => {
 
   return (
     <div className="p-8 bg-gradient-to-r from-blue-200 to-blue-400 min-h-screen">
-      <h1 className="text-5xl text-center mb-8 font-bold text-white drop-shadow-lg">Marriage List</h1>
+      <h1 className="text-3xl md:text-5xl text-center mb-8 font-bold text-white drop-shadow-lg">Marriage List</h1>
 
       <div className="flex justify-center mb-6 flex-wrap gap-4">
         {groups.map(group => (
@@ -131,13 +131,13 @@ const HomePage = () => {
                       {family.fields.childrens} Children, {family.fields.adults} Adults
                     </span>
                   </div>
-                  <div className="flex items-center flex-col justify-center">
+                  <div className="flex items-center flex-col justify-center md:flex-row gap-2">
                     <Badge variant={family.fields.called ? 'called' : 'notCalled'} className="md:mr-2 mx-auto">
                       {family.fields.called ? 'Called' : 'Not Called'}
                     </Badge>
 
                     {user && role === 'admin' && (
-                      <div className="flex items-center space-x-4 md:ml-4 flex-col justify-center">
+                      <div className="flex items-center md:space-x-4 md:ml-4 flex-col md:flex-row justify-center">
                         <AlertDialog>
                           <AlertDialogTrigger>
                             <button className="flex items-center text-sm text-red-600 hover:bg-red-100 p-2 rounded transition duration-200 mx-auto">
