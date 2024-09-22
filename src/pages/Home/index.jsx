@@ -15,6 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
 import { Pencil, Trash2 } from 'lucide-react'; // Importing icons
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -24,6 +25,7 @@ const HomePage = () => {
   const [deletingId, setDeletingId] = useState(null);
   const { user, role } = useAuth();
   const navigate = useNavigate();
+  const [parent, enableAnimations] = useAutoAnimate(/* optional config */)
 
   useEffect(() => {
     fetchFamilies();
@@ -62,7 +64,9 @@ const HomePage = () => {
 
   const groups = [
     { label: 'All', value: 'All' },
-    { label: 'Friends', value: 'friends' },
+    { label: 'Friends Lulu', value: 'friends lulu' },
+    { label: 'Friends Shamil', value: 'friends shamil' },
+    { label: 'Friends Ashi', value: 'friends ashi' },
     { label: 'Father Relatives', value: 'father relative' },
     { label: 'Mother Relatives', value: 'mother relative' },
     { label: 'Neighbors', value: 'neighbors' },
@@ -82,7 +86,7 @@ const HomePage = () => {
   const summary = getSummaryForGroup(selectedGroup);
 
   return (
-    <div className="p-8 bg-gradient-to-r from-blue-200 to-blue-400 min-h-screen">
+    <div className="p-8 bg-gradient-to-r from-blue-200 to-blue-400 min-h-full mb-2" ref={parent}>
       <h1 className="text-3xl md:text-5xl text-center mb-8 font-bold text-white drop-shadow-lg">Marriage List</h1>
 
       <div className="flex justify-center mb-6 flex-wrap gap-4">
@@ -114,13 +118,13 @@ const HomePage = () => {
         <p className="text-lg">Adults: {summary.totalAdults}</p>
       </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-6">
+      <div className="bg-white shadow-lg rounded-lg p-6" ref={parent}>
         <h2 className="text-3xl font-bold mb-4">Families</h2>
 
         {loading ? (
           <p className="text-center text-lg">Loading...</p>
         ) : (
-          <ul className="space-y-4">
+          <ul className="space-y-4" ref={parent}>
             {filteredFamilies.length > 0 ? (
               filteredFamilies.map((family, index) => (
                 <li key={index} className="border rounded-lg p-4 flex justify-between items-center shadow hover:shadow-md transition duration-200 bg-gray-50">

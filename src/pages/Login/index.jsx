@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Loader } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast"
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -35,13 +36,18 @@ const Login = () => {
   const { user, role: userRole } = authContext || {};
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast()
 
   useEffect(() => {
     if (user) {
       if (userRole === 'admin') {
         navigate('/add-data');
       } else {
-        alert('You are not authorized to access this page');
+        toast({
+          title: 'Unauthorized',
+          description: 'You are not authorized to access this page',
+          variant: 'destructive',
+        })
       }
     }
   }, [user, userRole, navigate]);
@@ -60,11 +66,19 @@ const Login = () => {
       if (role === 'admin') {
         navigate('/add-data');
       } else {
-        alert('You are not authorized to access this page');
+        toast({
+          title: 'Unauthorized',
+          description: 'You are not authorized to access this page',
+          variant: 'destructive',
+        })
       }
     } catch (error) {
       console.error('Error logging in:', error);
-      alert('Error logging in');
+      toast({
+        title: 'Error',
+        description: 'Error logging in',
+        variant: 'destructive',
+      })
     } finally {
       form.reset();
       setLoading(false);
@@ -72,9 +86,9 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-2">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md animate-fadeIn">
-        <h1 className="text-3xl font-bold text-center text-gray-700 mb-6">Login</h1>
+    <div className="flex items-center  h-[100%] bg-gradient-to-r from-purple-500 to-blue-600 p-6 md:p-1">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md animate-fadeIn mx-auto">
+        <h1 className="text-3xl font-bold text-center text-gray-700 mb-6">Get In</h1>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleLogin)}>
             <FormItem>
