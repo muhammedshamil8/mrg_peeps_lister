@@ -17,6 +17,9 @@ const badgeVariants = cva(
         outline: "text-slate-950 dark:text-slate-50",
         notCalled: "bg-red-600 text-white",
         called: "bg-green-600 text-white",
+        cancelled: "bg-slate-900 text-white",
+        pending: "bg-yellow-500 text-white",
+        confirmed: "bg-green-500 text-white",
       },
     },
     defaultVariants: {

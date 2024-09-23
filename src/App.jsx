@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Home, Statitics, NotFound, Login, AddData } from './pages';
+import { Home, Statitics, NotFound, Login, AddData, AddGroups } from './pages';
 import {
   ProtectLayout,
   PublicLayout,
@@ -14,6 +14,7 @@ function App() {
 
           <Route element={<ProtectLayout />}>
             <Route path="/add-data" element={<AddData />} />
+            <Route path="/add-categories" element={<AddGroups />} />
             <Route path="/add-data/:id" element={<AddData />} />
           </Route>
 
