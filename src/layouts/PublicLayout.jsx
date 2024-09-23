@@ -18,6 +18,16 @@ const PublicLayout = () => {
                         Add New
                     </NavLink>
                     <NavLink
+                        to="/add-categories"
+                        className={({ isActive }) =>
+                            `flex justify-center gap-2 items-center p-2 rounded-lg transition duration-200 
+                            ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
+                        }
+                    >
+                        <PlusCircle className="h-6 w-6" />
+                        Add Category
+                    </NavLink>
+                    <NavLink
                         to="/"
                         className={({ isActive }) =>
                             `flex justify-center gap-2 items-center p-2 rounded-lg transition duration-200 
@@ -57,6 +67,14 @@ const PublicLayout = () => {
                 <div className="flex justify-around">
                     <NavLink 
                         to="/add-data" 
+                        className={({ isActive }) => 
+                            `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
+                        }
+                    >
+                        <PlusCircle className="h-6 w-6 text-white" />
+                    </NavLink>
+                    <NavLink 
+                        to="/add-categories" 
                         className={({ isActive }) => 
                             `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                         }

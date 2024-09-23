@@ -42,6 +42,16 @@ const AdminLayout = () => {
                             Add New
                         </NavLink>
                         <NavLink
+                            to="/add-categories"
+                            className={({ isActive }) =>
+                                `flex justify-center gap-2 items-center p-2 rounded-lg transition-transform duration-200 
+                                ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
+                            }
+                        >
+                            <PlusCircle className="h-6 w-6" />
+                            Add Category
+                        </NavLink>
+                        <NavLink
                             to="/"
                             className={({ isActive }) =>
                                 `flex justify-center gap-2 items-center p-2 rounded-lg transition-transform duration-200 
@@ -100,6 +110,14 @@ const AdminLayout = () => {
                             <PlusCircle className="h-6 w-6 text-white" />
                         </NavLink>
                         <NavLink 
+                            to="/add-categories" 
+                            className={({ isActive }) => 
+                                `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
+                            }
+                        >
+                            <PlusCircle className="h-6 w-6 text-white" />
+                        </NavLink>
+                        <NavLink 
                             to="/" 
                             className={({ isActive }) => 
                                 `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
@@ -107,6 +125,7 @@ const AdminLayout = () => {
                         >
                             <Home className="h-6 w-6 text-white" />
                         </NavLink>
+                        
                         <NavLink 
                             to="/statistics" 
                             className={({ isActive }) => 
