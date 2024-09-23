@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { Home, BarChart, PlusCircle, LogIn } from 'lucide-react'; // Importing Lucide icons
+import { Home, BarChart, PlusCircle, LogIn , BadgePlus } from 'lucide-react'; // Importing Lucide icons
 
 const PublicLayout = () => {
     return (
@@ -24,7 +24,8 @@ const PublicLayout = () => {
                             ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                         }
                     >
-                        <PlusCircle className="h-6 w-6" />
+                        
+                        <BadgePlus className="h-6 w-6" />
                         Add Category
                     </NavLink>
                     <NavLink
@@ -79,7 +80,7 @@ const PublicLayout = () => {
                             `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                         }
                     >
-                        <PlusCircle className="h-6 w-6 text-white" />
+                        <BadgePlus className="h-6 w-6 text-white" />
                     </NavLink>
                     <NavLink 
                         to="/" 

@@ -166,7 +166,7 @@ const HomePage = () => {
 
 
   return (
-    <div className="p-8 bg-gradient-to-r from-blue-200 to-blue-400 min-h-full mb-2" ref={parent}>
+    <div className="p-8 bg-gradient-to-r from-blue-200 to-blue-400 min-h-full pb-10  overflow-auto" ref={parent}>
       <h1 className="text-3xl md:text-5xl text-center mb-8 font-bold text-white drop-shadow-lg">Marriage List</h1>
 
       <div className="flex justify-center mb-6 flex-wrap gap-4">

@@ -208,7 +208,7 @@ const AirtableForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start pt-10 h-full bg-gradient-to-r from-blue-300 to-purple-500 p-4" ref={parent}>
+    <div className="flex flex-col items-center justify-start pt-10 h-full bg-gradient-to-r from-blue-300 to-purple-500 p-4  pb-20 md:pb-0 overflow-auto" ref={parent}>
       <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white">{isEdit ? 'Edit Family Data' : 'Add Family Data'}</h1>
 
       {loading ? (
@@ -220,7 +220,7 @@ const AirtableForm = () => {
             {isEdit ? 'Edit the family data below' : 'Fill in the form below to add a new family'}
           </p>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="w-full max-w-md bg-white shadow-md rounded-lg p-6 mb-6">
 
               <FormField
                 control={form.control}

@@ -162,11 +162,11 @@ const AirtableForm = () => {
         }
     }
     return (
-        <div className="flex flex-col items-center justify-start pt-10 h-full bg-gradient-to-r from-blue-300 to-purple-500 p-4" ref={parent}>
+        <div className="flex flex-col items-center justify-start pt-10 h-full bg-gradient-to-r from-blue-300 to-purple-500 p-4 overflow-auto pb-20 md:pb-0" ref={parent}>
             <h1 className="text-3xl md:text-5xl font-bold text-center text-white mb-10">Manage Categories</h1>
 
             {/* Buttons to switch between forms */}
-            <div className="mb-6 flex space-x-4 justify-center items-center" >
+            <div className="mb-6 flex justify-center items-center flex-wrap gap-4" >
                 <Button onClick={() => handleFormSwitch('groups')} className="bg-blue-500 text-white">
                     Add Group
                 </Button>
@@ -246,14 +246,14 @@ const AirtableForm = () => {
             )}
             <section className='flex flex-col items-center justify-start pt-10 h-full  p-4' ref={parent}>
                 {/* Buttons to switch between forms */}
-                <div className="mb-6 flex space-x-4">
-                    <Button onClick={() => handleShowSwitch('groups')} className="bg-blue-500 text-white">
+                <div className="mb-6 flex gap-4 flex-wrap mx-auto justify-center">
+                    <Button onClick={() => handleShowSwitch('groups')} className="bg-blue-500 text-white mx-auto">
                         Show Group
                     </Button>
-                    <Button onClick={() => handleShowSwitch('subgroups')} className="bg-green-500 text-white">
+                    <Button onClick={() => handleShowSwitch('subgroups')} className="bg-green-500 text-white mx-auto">
                         Show Subgroup
                     </Button>
-                    <Button onClick={() => handleShowSwitch('places')} className="bg-purple-500 text-white">
+                    <Button onClick={() => handleShowSwitch('places')} className="bg-purple-500 text-white mx-auto">
                         Show Place
                     </Button>
                 </div>

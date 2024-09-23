@@ -70,7 +70,7 @@ const StatisticsPage = () => {
   const groupedStatistics = Object.values(statisticsData);
 
   return (
-    <div className="flex flex-col items-center justify-start p-8 bg-gradient-to-r from-purple-200 to-purple-400 min-h-full" ref={parent}>
+    <div className="flex flex-col items-center justify-start p-8 bg-gradient-to-r from-purple-200 to-purple-400 min-h-full  overflow-auto pb-10" ref={parent}>
       <h1 className="text-3xl md:text-5xl font-bold mb-8 text-white drop-shadow-lg">Statistics Page</h1>
 
       {loading ? (
@@ -81,7 +81,7 @@ const StatisticsPage = () => {
         <>
           <div className="flex flex-wrap gap-8 mb-8" ref={parent}>
             {groupedStatistics.map((item, index) => (
-              <div key={index} className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105 w-full max-w-[360px] text-lg">
+              <div key={index} className="bg-white shadow-lg rounded-lg p-8 transition-transform transform hover:scale-105 w-full max-w-[360px] text-lg mx-auto">
                 <div className="flex items-center mb-6" onClick={() => handleGroupClick(index)}>
                   <UserRound className="w-8 h-8 text-purple-500 cursor-pointer" />
                   <h2 className="text-xl font-semibold ml-4 cursor-pointer">{item.group}</h2>

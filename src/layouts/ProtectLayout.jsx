@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import AuthRoleRequire from '@/components/router/AuthRole';
 import { useAuth } from '@/context/AuthContext';
-import { Home, BarChart, PlusCircle, LogOut } from 'lucide-react'; // Importing Lucide icons
+import { Home, BarChart, PlusCircle, LogOut, BadgePlus } from 'lucide-react'; // Importing Lucide icons
 import {
     AlertDialog,
     AlertDialogAction,
@@ -48,7 +48,7 @@ const AdminLayout = () => {
                                 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                             }
                         >
-                            <PlusCircle className="h-6 w-6" />
+                            <BadgePlus className="h-6 w-6" />
                             Add Category
                         </NavLink>
                         <NavLink
@@ -95,40 +95,40 @@ const AdminLayout = () => {
                         </AlertDialog>
                     </nav>
                 </header>
-                <main className="flex-grow bg-gray-100 overflow-auto">
+                <main className="flex-grow bg-gray-100 overflow-auto ">
                     <Outlet />
                 </main>
                 {/* Bottom Navigation for Mobile */}
                 <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 p-4 md:hidden">
                     <div className="flex justify-around">
-                        <NavLink 
-                            to="/add-data" 
-                            className={({ isActive }) => 
+                        <NavLink
+                            to="/add-data"
+                            className={({ isActive }) =>
                                 `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                             }
                         >
                             <PlusCircle className="h-6 w-6 text-white" />
                         </NavLink>
-                        <NavLink 
-                            to="/add-categories" 
-                            className={({ isActive }) => 
+                        <NavLink
+                            to="/add-categories"
+                            className={({ isActive }) =>
                                 `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                             }
                         >
-                            <PlusCircle className="h-6 w-6 text-white" />
+                            <BadgePlus className="h-6 w-6 text-white" />
                         </NavLink>
-                        <NavLink 
-                            to="/" 
-                            className={({ isActive }) => 
+                        <NavLink
+                            to="/"
+                            className={({ isActive }) =>
                                 `flex flex-col items-center p-2 transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                             }
                         >
                             <Home className="h-6 w-6 text-white" />
                         </NavLink>
-                        
-                        <NavLink 
-                            to="/statistics" 
-                            className={({ isActive }) => 
+
+                        <NavLink
+                            to="/statistics"
+                            className={({ isActive }) =>
                                 `flex flex-col items-center p-2  transition rounded-lg duration-200 ${isActive ? 'bg-blue-500 scale-105' : 'hover:bg-blue-500'}`
                             }
                         >
