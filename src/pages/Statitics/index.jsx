@@ -25,8 +25,8 @@ const StatisticsPage = () => {
   };
 
   const totalFamilies = familyData.length;
-  const totalAdults = familyData.reduce((acc, family) => acc + (family.fields.totalAdults || 0), 0);
-  const totalChildren = familyData.reduce((acc, family) => acc + (family.fields.totalChildren || 0), 0);
+  const totalAdults = familyData.reduce((acc, family) => acc + (family.fields.adults || 0), 0);
+  const totalChildren = familyData.reduce((acc, family) => acc + (family.fields.childrens || 0), 0);
   const totalCalled = familyData.reduce((acc, family) => acc + (family.fields.called ? 1 : 0), 0);
 
   const statisticsData = familyData.reduce((acc, family) => {
@@ -35,8 +35,8 @@ const StatisticsPage = () => {
       acc[group] = { group, totalFamilies: 0, totalAdults: 0, totalChildren: 0, called: 0 };
     }
     acc[group].totalFamilies += 1;
-    acc[group].totalAdults += family.fields.totalAdults || 0;
-    acc[group].totalChildren += family.fields.totalChildren || 0;
+    acc[group].totalAdults += family.fields.adults || 0;
+    acc[group].totalChildren += family.fields.childrens || 0;
     acc[group].called += family.fields.called ? 1 : 0;
     return acc;
   }, {});

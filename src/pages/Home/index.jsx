@@ -77,7 +77,7 @@ const HomePage = () => {
   const getSummaryForGroup = (group) => {
     const familiesInGroup = filteredFamilies.filter(family => family.fields.group === group);
     const totalFamilies = familiesInGroup.length;
-    const totalChildren = familiesInGroup.reduce((acc, family) => acc + (family.fields.children || 0), 0);
+    const totalChildren = familiesInGroup.reduce((acc, family) => acc + (family.fields.childrens || 0), 0);
     const totalAdults = familiesInGroup.reduce((acc, family) => acc + (family.fields.adults || 0), 0);
 
     return { totalFamilies, totalChildren, totalAdults };
