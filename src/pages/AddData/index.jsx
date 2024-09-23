@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   Form,
   FormItem,
@@ -25,48 +25,81 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { createRecord, updateRecord, fetchRecord } from '@/utils/airtableService';
+import { createRecord, updateRecord, fetchRecord, fetchRecords } from '@/utils/airtableService';
 import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { useToast } from "@/hooks/use-toast"
 
 const airtableSchema = z.object({
-  familyName: z.string().min(1, { message: "Family name is required" }),
+  family_name: z.string().min(1, { message: "Family name is required" }),
   adults: z.number().min(0, { message: "Must be 0 or more" }),
-  children: z.number().min(0, { message: "Must be 0 or more" }),
-  group: z.string().min(1, { message: "Group is required" }),
-  called: z.boolean(),
+  childrens: z.number().min(0, { message: "Must be 0 or more" }),
+  groups: z.string().nonempty({ message: "Group is required" }),
+  subgroups: z.string().optional(),
+  places: z.string().optional(),
+  status: z.string().nonempty({ message: "Status is required" }),
+  called: z.boolean().optional(),
 });
 
+const statusOptions = [
+  { value: 'pending', label: 'Pending' },
+  { value: 'confirmed', label: 'Confirmed' },
+  { value: 'cancelled', label: 'Cancelled' },
+];
 const AirtableForm = () => {
-  const { id } = useParams();
+  const eventID = useParams().id;
   const form = useForm({
     resolver: zodResolver(airtableSchema),
     defaultValues: {
-      familyName: '',
+      family_name: '',
       adults: 0,
-      children: 0,
-      group: '',
+      childrens: 0,
+      groups: '',
+      subgroups: '',
+      places: '',
+      status: 'pending',
       called: false,
     },
   });
-
   const [loading, setLoading] = useState(true);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [groups, setGroups] = useState([]);
+  const [subgroups, setSubgroups] = useState([]);
+  const [places, setPlaces] = useState([]);
+  const [groupsloading, setGroupsLoading] = useState(true);
+  const [subgroupsloading, setSubgroupsLoading] = useState(true);
+  const [placesloading, setPlacesLoading] = useState(true);
   const [parent, enableAnimations] = useAutoAnimate(/* optional config */)
   const { toast } = useToast()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (id) {
+      if (eventID) {
         try {
-          const record = await fetchRecord('families', id);
+          const record = await fetchRecord('families', eventID);
+          console.log(record);
           if (record) {
-            form.setValue('familyName', record.fields.family_name);
+            form.setValue('family_name', record.fields.family_name);
             form.setValue('adults', record.fields.adults);
-            form.setValue('children', record.fields.childrens);
-            form.setValue('group', record.fields.group);
+            form.setValue('childrens', record.fields.childrens);
+            form.setValue('groups',
+              Array.isArray(record.fields.groups) && record.fields.groups.length > 0
+                ? record.fields.groups[0]
+                : record.fields.groups || ''
+            );
+            form.setValue('subgroups',
+              Array.isArray(record.fields.subgroups) && record.fields.subgroups.length > 0
+                ? record.fields.subgroups[0]
+                : record.fields.subgroups || ''
+            );
+            form.setValue('places',
+              Array.isArray(record.fields.places) && record.fields.places.length > 0
+                ? record.fields.places[0]
+                : record.fields.places || ''
+            );
             form.setValue('called', record.fields.called);
+            form.setValue('status', record.fields.status);
             setIsEdit(true);
           }
         } catch (error) {
@@ -77,27 +110,34 @@ const AirtableForm = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [eventID]);
 
   useEffect(() => {
-    if (!id) {
+    if (!eventID) {
       setLoading(false);
     }
+    fetchGroups();
+    fetchPlaces();
+    fetchSubgroups();
   }, []);
 
   const handleSubmit = async (data) => {
+    console.log(data);
     setSubmitLoading(true);
     try {
       const formattedData = {
-        family_name: data.familyName,
+        family_name: data.family_name,
         called: data.called,
-        group: data.group,
+        status: data.status,
         adults: Number(data.adults),
-        childrens: Number(data.children),
+        childrens: Number(data.childrens),
+        groups: data.groups ? [data.groups] : [],
+        places: data.places ? [data.places] : [],
+        subgroups: data.subgroups ? [data.subgroups] : [],
       };
 
       if (isEdit) {
-        await updateRecord(id, formattedData);
+        await updateRecord('families', eventID, formattedData);
         toast({
           title: 'Success',
           description: 'Family data updated successfully',
@@ -113,6 +153,7 @@ const AirtableForm = () => {
       }
 
       form.reset();
+      form.setValue('groups', '');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast({
@@ -123,8 +164,48 @@ const AirtableForm = () => {
 
     } finally {
       setSubmitLoading(false);
+      // handleNavigateBack();
     }
   };
+
+
+  const fetchPlaces = async () => {
+    try {
+      const records = await fetchRecords('places');
+      console.log(records);
+      setPlaces(records);
+    } catch (error) {
+      console.error('Error fetching places:', error);
+    } finally {
+      setPlacesLoading(false);
+    }
+  }
+  const fetchGroups = async () => {
+    try {
+      const records = await fetchRecords('groups');
+      console.log(records);
+      setGroups(records);
+    } catch (error) {
+      console.error('Error fetching groups:', error);
+    } finally {
+      setGroupsLoading(false);
+    }
+  }
+  const fetchSubgroups = async () => {
+    try {
+      const records = await fetchRecords('subgroups');
+      console.log(records);
+      setSubgroups(records);
+    } catch (error) {
+      console.error('Error fetching subgroups:', error);
+    } finally {
+      setSubgroupsLoading(false);
+    }
+  }
+
+  const handleNavigateBack = () => {
+    navigate(-1);
+  }
 
   return (
     <div className="flex flex-col items-center justify-start pt-10 h-full bg-gradient-to-r from-blue-300 to-purple-500 p-4" ref={parent}>
@@ -143,7 +224,7 @@ const AirtableForm = () => {
 
               <FormField
                 control={form.control}
-                name="familyName"
+                name="family_name"
                 render={({ field }) => (
                   <FormItem ref={parent}>
                     <FormLabel>Family Name</FormLabel>
@@ -175,10 +256,10 @@ const AirtableForm = () => {
               />
               <FormField
                 control={form.control}
-                name="children"
+                name="childrens"
                 render={({ field }) => (
                   <FormItem ref={parent}>
-                    <FormLabel>Children</FormLabel>
+                    <FormLabel>Childrens</FormLabel>
                     <Input
                       type="number"
                       placeholder="Number of Children"
@@ -192,7 +273,7 @@ const AirtableForm = () => {
               />
               <FormField
                 control={form.control}
-                name="group"
+                name="groups"
                 render={({ field }) => (
                   <FormItem ref={parent}>
                     <FormLabel>Group</FormLabel>
@@ -203,12 +284,87 @@ const AirtableForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="mother relative">Mother Relative</SelectItem>
-                        <SelectItem value="father relative">Father Relative</SelectItem>
-                        <SelectItem value="friends shamil">Friends shamil</SelectItem>
-                        <SelectItem value="friends lulu">Friends Lulu</SelectItem>
-                        <SelectItem value="friends ashi">Friends Ashique</SelectItem>
-                        <SelectItem value="neighbors">Neighbors</SelectItem>
+                        {groupsloading ? (
+                          <Loader className="animate-spin" />
+                        ) : (
+                          groups.map((item, index) => (
+                            <SelectItem key={index} value={item.id}>{item.fields.group_name}</SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="subgroups"
+                render={({ field }) => (
+                  <FormItem ref={parent}>
+                    <FormLabel>Sub Group</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Sub Group" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {subgroupsloading ? (
+                          <Loader className="animate-spin" />
+                        ) : (
+                          subgroups.map((item, index) => (
+                            <SelectItem key={index} value={item.id}>{item.fields.subgroup_name}</SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="places"
+                render={({ field }) => (
+                  <FormItem ref={parent}>
+                    <FormLabel>Place</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Place" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {placesloading ? (
+                          <Loader className="animate-spin" />
+                        ) : (
+                          places.map((item, index) => (
+                            <SelectItem key={index} value={item.id}>{item.fields.place_name}</SelectItem>
+                          ))
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem ref={parent}>
+                    <FormLabel>Status</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {statusOptions.map((item, index) => (
+                          <SelectItem key={index} value={item.value}>{item.label}</SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -240,7 +396,7 @@ const AirtableForm = () => {
                   )}
                 />
               </FormItem>
-              <Button type="submit" className="mt-4 w-full bg-blue-600 text-white hover:bg-blue-700 transition duration-200" disabled={submitLoading}>
+              <Button type="submit" className="mt-4 w-full bg-blue-600 text-white hover:bg-blue-700 transition duration-200 disabled:bg-gray-400" disabled={submitLoading}>
                 {submitLoading ? <Loader className="animate-spin" /> : (isEdit ? 'Update' : 'Submit')}
               </Button>
             </form>
