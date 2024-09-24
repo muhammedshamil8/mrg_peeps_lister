@@ -16,11 +16,12 @@ function App() {
             <Route path="/add-data" element={<AddData />} />
             <Route path="/add-categories" element={<AddGroups />} />
             <Route path="/add-data/:id" element={<AddData />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/statistics" element={<Statitics />} />
           </Route>
 
           <Route element={<PublicLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/statistics" element={<Statitics />} />
+
             <Route path="/login" element={<Login />} />
           </Route>
 

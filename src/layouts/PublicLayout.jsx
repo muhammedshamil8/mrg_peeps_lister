@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { Home, BarChart, PlusCircle, LogIn , BadgePlus } from 'lucide-react'; // Importing Lucide icons
+import { Home, BarChart, PlusCircle, LogIn, BadgePlus } from 'lucide-react'; // Importing Lucide icons
 
 const PublicLayout = () => {
     return (
-        <div className="flex flex-col h-screen bg-slate-900 pb-12 md:pb-0">
-            <header className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 shadow-lg">
+        <div className="flex flex-col h-screen bg-slate-900 ">
+            {/* <header className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 shadow-lg">
                 <nav className="flex justify-around select-none">
                     <NavLink
                         to="/add-data"
@@ -59,12 +59,13 @@ const PublicLayout = () => {
                         Log In
                     </NavLink>
                 </nav>
-            </header>
+            </header> */}
+            <h1 className='text-xl text-white text-center p-4'>Wedding Calling Lister</h1>
             <main className="flex-grow bg-gray-100 overflow-auto">
                 <Outlet />
             </main>
             {/* Bottom Navigation for Mobile */}
-            <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 md:hidden">
+            {/* <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 md:hidden">
                 <div className="flex justify-around">
                     <NavLink 
                         to="/add-data" 
@@ -107,7 +108,16 @@ const PublicLayout = () => {
                         <LogIn className="h-6 w-6 text-white" />
                     </NavLink>
                 </div>
-            </nav>
+            </nav> */}
+            <div className="flex flex-col items-center justify-center p-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+                <p className="text-sm md:text-base">
+                    &copy; {new Date().getFullYear()} | Built with ❤️ by
+                    <a href="https://zami.me" className="ml-1 underline hover:text-gray-200 transition-colors">
+                        Zamil
+                    </a>
+                </p>
+            </div>
+
         </div>
     );
 };
