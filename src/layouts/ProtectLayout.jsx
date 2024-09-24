@@ -28,8 +28,8 @@ const AdminLayout = () => {
 
     return (
         <AuthRoleRequire role="admin">
-            <div className="flex flex-col h-screen bg-slate-900">
-                <header className="hidden md:block bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 shadow-lg">
+            <div className=" flex-col h-screen bg-slate-900">
+                <header className="hidden md:block h-[70px] bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 shadow-lg">
                     <nav className="flex justify-around select-none">
                         <NavLink
                             to="/add-data"
@@ -95,11 +95,11 @@ const AdminLayout = () => {
                         </AlertDialog>
                     </nav>
                 </header>
-                <main className="flex-grow bg-gray-100 overflow-auto ">
+                <main className="flex-grow bg-gray-100  h-[calc(100vh-70px)]  overflow-auto">
                     <Outlet />
                 </main>
                 {/* Bottom Navigation for Mobile */}
-                <nav className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-blue-600 to-purple-600 p-4 md:hidden">
+                <nav className="fixed bottom-0 left-0 right-0 h-[70px] bg-gradient-to-r from-blue-600 to-purple-600 p-4 md:hidden">
                     <div className="flex justify-around">
                         <NavLink
                             to="/add-data"
