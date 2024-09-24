@@ -112,7 +112,7 @@ const PublicLayout = () => {
             <div className="flex flex-col items-center justify-center p-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                 <p className="text-sm md:text-base">
                     &copy; {new Date().getFullYear()} | Built with ❤️ by
-                    <a href="https://zami.me" className="ml-1 underline hover:text-gray-200 transition-colors">
+                    <a href="https://zamil.me" className="ml-1 underline hover:text-gray-200 transition-colors">
                         Zamil
                     </a>
                 </p>
